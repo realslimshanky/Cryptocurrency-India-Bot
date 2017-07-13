@@ -87,7 +87,7 @@ Use one of the following commands
 /nextmeetupschedule - to get schedule of next Meetup
 /github - to get a link to Cryptocurrency-India Github page
 /invitelink - to get an invite link for Cryptocurrency-India Telegram Group of Volunteers
-/help - to see how recurssion works
+/help - to see how recursion works
 
 To contribute to | modify this bot : https://github.com/realslimshanky/Cryptocurrency-India-Bot
 ''')
