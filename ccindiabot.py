@@ -1,42 +1,49 @@
-from telegram.ext import Updater,CommandHandler
+from telegram.ext import Updater, CommandHandler
 from telegram import ChatAction
-from datetime import datetime, timedelta
+from datetime import datetime
 from pytz import timezone
 from time import sleep
-import logging,requests,pytz,re,ast
+import logging
+import requests
+import pytz
+import re
 
-logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',level=logging.INFO)
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
 
-updater=Updater(token='<Bot-Token>')
-dispatcher=updater.dispatcher
+updater = Updater(token='<Bot-Token>')
+dispatcher = updater.dispatcher
 
-meetupApi={'sign':'true','key':'<Meetup-API-Key>'}
+meetupApi = {'sign': 'true', 'key': '<Meetup-API-Key>'}
 
 utc = pytz.utc
 
 print("I'm On..!!")
 
+
 def start(bot, update, args):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
         bot.sendMessage(chat_id=update.message.chat_id,text='''
-Hi! My powers are solely for the service of Cryptocurrency-India Community
+Hi! My powers are solely for the service of Blockchain_Developers Community
 Use /help to get /help''')
+
 
 def website(bot, update):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
         bot.sendMessage(chat_id=update.message.chat_id,text='http://cryptocurrencyindia.org (will be live soon)')
 
+
 def meetup(bot, update):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
-        bot.sendMessage(chat_id=update.message.chat_id,text='https://www.meetup.com/Cryptocurrency-India')
+        bot.sendMessage(chat_id=update.message.chat_id,text='https://www.meetup.com/Blockchain_Developers')
+
 
 def nextmeetup(bot, update):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
-        r=requests.get('http://api.meetup.com/Cryptocurrency-India/events', params=meetupApi)
+        r=requests.get('http://api.meetup.com/Blockchain_Developers/events', params=meetupApi)
         #print(r.json()[0])
         event_link=r.json()[0]['link']
         date_time=r.json()[0]['time']//1000
@@ -54,42 +61,46 @@ Next Meetup
 Date/Time : %s
 Venue : %s
 Event Page : %s
-'''%(date_time, venue, event_link))
+''' % (date_time, venue, event_link))
+
 
 def nextmeetups(bot, update):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
-        r=requests.get('http://api.meetup.com/Cryptocurrency-India/events', params=meetupApi)
+        r=requests.get('http://api.meetup.com/Blockchain_Developers/events', params=meetupApi)
         #print(re.sub('</a>','',re.sub('<a href="','',re.sub('<br/>',' ',re.sub('<p>',' ',re.sub('</p>','\n',r.json()[0]['description']))))))
         bot.sendMessage(chat_id=update.message.chat_id, text='''
 Next Meetup Schedule
 %s
-'''%(re.sub('</a>','',re.sub('<a href="','',re.sub('<br/>',' ',re.sub('<p>',' ',re.sub('</p>','\n',r.json()[0]['description'])))))),parse_mode='HTML')
+''' % (re.sub('</a>', '', re.sub('<a href="', '', re.sub('<br/>', ' ', re.sub('<p>', ' ', re.sub('</p>', '\n', r.json()[0]['description'])))))), parse_mode='HTML')
+
 
 def github(bot, update):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
-        bot.sendMessage(chat_id=update.message.chat_id, text='http://github.com/cryptocurrencyindia')
+        bot.sendMessage(chat_id=update.message.chat_id, text='https://github.com/BlockchainDevs')
 
-def invitelink(bot,update):
+
+def invitelink(bot, update):
         bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
         sleep(0.2)
-        bot.sendMessage(chat_id=update.message.chat_id, text='https://t.me/joinchat/B90LyUSI9SAQlOEmPgkvsA')
+        bot.sendMessage(chat_id=update.message.chat_id, text='https://t.me/Blockchain_Devs')
+
 
 def help(bot, update):
-	bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
-	sleep(0.2)
-	bot.sendMessage(chat_id=update.message.chat_id, text='''
+    bot.sendChatAction(chat_id=update.message.chat_id, action=ChatAction.TYPING)
+    sleep(0.2)
+    bot.sendMessage(chat_id=update.message.chat_id, text='''
 Use one of the following commands
-/website - to get the Cryptocurrency-India website 
-/meetuppage - to get a link to Cryptocurrency-India Meetup page
+/website - to get the Blockchain_Developers website
+/meetuppage - to get a link to Blockchain_Developers Meetup page
 /nextmeetup - to get info about next Meetup
 /nextmeetupschedule - to get schedule of next Meetup
-/github - to get a link to Cryptocurrency-India Github page
-/invitelink - to get an invite link for Cryptocurrency-India Telegram Group of Volunteers
+/github - to get a link to Blockchain_Developers Github page
+/invitelink - to get an invite link for Blockchain_Developers Telegram Group of Volunteers
 /help - to see how recursion works
 
-To contribute to | modify this bot : https://github.com/realslimshanky/Cryptocurrency-India-Bot
+To contribute to | modify this bot : https://github.com/realslimshanky/Blockchain_Developers-Bot
 ''')
 
 dispatcher.add_handler(CommandHandler('start', start, pass_args=True))
